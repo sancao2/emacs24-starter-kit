@@ -25,8 +25,6 @@ url/*
 
 ## exported and encrypted files
 *gpg
-*el
-*elc
 *html
 *tex
 *pdf
@@ -51,3 +49,4 @@ secret.org
 .emacs.desktop*
 .*~
 agent/*
+session.*
