@@ -6,7 +6,7 @@
 
 (require 'quack)
 
-(require 'init-themes)
+(require '~/.emacs.d/init-themes)
 
 ;;add global key set
 (global-set-key "\C-cl" 'org-store-link)
