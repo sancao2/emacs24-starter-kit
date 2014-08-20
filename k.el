@@ -154,4 +154,105 @@
 
 (helm-mode 1)
 
-;;(require 'rvm)
+
+;; {{ export org-mode in Chinese into PDF
+;; @see http://freizl.github.io/posts/2012-04-06-export-orgmode-file-in-Chinese.html
+;; and you need install texlive-xetex on different platforms
+;; To install texlive-xetex:
+;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+;; }}
+
+
+;; @see https://gist.github.com/mwfogleman/95cc60c87a9323876c6c
+(defun narrow-or-widen-dwim ()
+  "If the buffer is narrowed, it widens. Otherwise, it narrows to region, or Org subtree."
+  (interactive)
+  (cond ((buffer-narrowed-p) (widen))
+        ((region-active-p) (narrow-to-region (region-beginning) (region-end)))
+        ((equal major-mode 'org-mode) (org-narrow-to-subtree))
+        (t (error "Please select a region to narrow to"))))
+
+(setq org-export-html-style-include-default nil)
+  
+;;(setq org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org-html-style.css\">")
+  
+(setq org-export-html-style "<style type=\"text/css\">
+body {
+     font-family:Times,serif;
+     font-size:100%;
+     line-height:1.5em;
+     max-width: 560px;
+     min-width: 550px;
+     margin:3% auto;
+}
+.author {
+     display:none;
+}
+.title {
+     font-size:2em;
+     line-height:2em;
+     margin:0;
+     padding:0;
+     text-align:center;
+}
+.todo {
+     color:red;
+}
+.done {
+     color:green;
+}
+.WAITING  {
+}
+.timestamp {
+     color:grey;
+}
+.timestamp-kwd {
+     color:CadetBlue;
+}
+.timestamp-wrapper {
+}
+.tag {
+     background-color:lightblue;
+     font-weight:normal;
+}
+._HOME {
+}
+.target {
+     background-color:lavender;
+}
+.linenr {
+}
+.code-highlighted {
+}
+h2 {
+     background-color:#AEC5CE;
+     font-size:1.5em;
+     margin:10px 0;
+     padding:0 2px;
+}
+h3 {
+     border-bottom:1px solid #9AB7C2;
+     font-size:1.2em;
+     margin:5px 0;
+}
+h4 {
+     font-size:1em;
+     margin:5px 0;
+}
+p {
+     margin:8px 0 0 1em;
+}
+#postamble {
+     border:1px solid gray;
+     color:gray;
+     font-size:13px;
+     font-style:italic;
+     line-height:1em;
+     margin-top:2em;
+     padding-bottom:5px;
+}
+</style>")
